@@ -2,7 +2,7 @@ package com.calc;
 
 import com.calc.exception.CalculatorException;
 import com.calc.exception.CalculatorRuntimeException;
-import com.calc.lexicalanalysis.Analyzer;
+import com.calc.lexicalanalysis.Tokenizer;
 import com.calc.token.Token;
 import com.calc.token.function.FunctionTokenFactory;
 import com.calc.token.operator.additive.AdditiveTokenFactory;
@@ -16,26 +16,27 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-
+/**
+ * Calculates expression from given string.
+ */
 public class Calculator {
-    private Analyzer analyzer;
-    private Logger logger = LoggerFactory.getLogger(Calculator.class);
-    private CompositeTokenFactory factories;
-
+    private final Logger logger = LoggerFactory.getLogger(Calculator.class);
+    private final Tokenizer tokenizer;
+    private final CompositeTokenFactory factories;
 
     public Calculator() {
         factories = new CompositeTokenFactory(
                 new AdditiveTokenFactory(), new BinaryTokenFactory(), new ServiceTokenFactory(),
                 new FunctionTokenFactory(), new UnaryTokenFactory());
-        analyzer = new Analyzer(factories);
+        tokenizer = new Tokenizer(factories);
     }
 
     public Number calc(CharSequence inp) throws CalculatorException {
         logger.debug("calculate input: {}", inp);
         try {
-            return calcFromPolishAnnotation(toPolishAnnotation(analyzer.getIterable(inp)));
+            return calcFromPolishAnnotation(toPolishAnnotation(tokenizer.apply(inp)));
         } catch (CalculatorRuntimeException e) {
-            CalculatorException ee =  new CalculatorException(e);
+            CalculatorException ee = new CalculatorException(e);
             ee.initCause(e);
             throw ee;
         }
@@ -51,22 +52,21 @@ public class Calculator {
 
     private Number calcFromPolishAnnotation(List<Token> tokens) {
         logger.debug("in Reverse Polish notation: {}", tokens);
-        CalcPolishAnnotationVisitor visitor = new CalcPolishAnnotationVisitor();
+        final CalcPolishAnnotationVisitor visitor = new CalcPolishAnnotationVisitor();
         for (Token t : tokens) {
             t.accept(visitor);
         }
-        Number res = visitor.getResult();
+        final Number res = visitor.getResult();
         logger.debug("result: {}", res);
         return res;
     }
 
     private List<Token> toPolishAnnotation(Iterable<Token> tokens) {
-        ToPolishAnnotationVisitor visitor = new ToPolishAnnotationVisitor();
-        for (Token t : tokens) {
-            t.accept(visitor);
+        final ToPolishAnnotationVisitor visitor = new ToPolishAnnotationVisitor();
+        for (Token each : tokens) {
+            each.accept(visitor);
         }
         return visitor.inPolishAnnotation();
     }
-
 }
 

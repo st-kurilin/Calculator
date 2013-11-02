@@ -7,22 +7,25 @@ import com.calc.tokenfactory.TokenFactory;
 import java.text.ParsePosition;
 import java.util.Iterator;
 
-public class Analyzer {
+/**
+ * Splits strings to tokens.
+ */
+public class Tokenizer {
     private TokenFactory factory;
 
-    public Analyzer(TokenFactory factory) {
+    public Tokenizer(TokenFactory factory) {
         this.factory = factory;
     }
 
-    public Iterable<Token> getIterable(CharSequence input) {
+    public Iterable<Token> apply(CharSequence input) {
         return new Handler(input);
     }
 
     private class Handler implements Iterable<Token> {
-        private ValidatorVisitor validator;
-        private String source;
+        private final ValidatorVisitor validator;
+        private final String source;
+        private final ParsePosition position;
         private Token nextToken;
-        private ParsePosition position;
 
         Handler(CharSequence input) {
             validator = new ValidatorVisitor();
@@ -31,7 +34,7 @@ public class Analyzer {
             evalNextToken();
         }
 
-        void evalNextToken() {
+        private void evalNextToken() {
             skipWhiteSpaces();
             if (thereIsUnparsedText()) {
                 Token token = factory.createToken(source, position);

@@ -14,25 +14,25 @@ public class Runner {
 
     public static void main(String[] args) {
         logger.debug("start");
-        Calculator calculator = new Calculator();
-        CalculatorUI ui;
-        if (presentOnly(args, "help")) {
-            logger.debug("help mode");
-            ui = new HelpUI();
-        } else {
-            if (presentOnly(args, "console")) {
-                logger.debug("console mode");
-                ui = new ConsoleUI(calculator);
-            } else {
-                logger.debug("gui mode");
-                ui = new GraphicalUI(calculator);
-            }
-        }
+        final Calculator calculator = new Calculator();
+        final CalculatorUI ui = createUi(args, calculator);
         ui.go();
         logger.debug("end");
     }
 
-    private static boolean presentOnly(String[] args, String s) {
-        return args.length == 1 && args[0].equalsIgnoreCase(s);
+    private static CalculatorUI createUi(String[] args, Calculator calculator) {
+        if (args.length == 1) {
+            final String arg = args[0];
+            if (arg.equals("help")) {
+                logger.debug("help mode");
+                return new HelpUI();
+            }
+            if (arg.equals("console")) {
+                logger.debug("console mode");
+                return new ConsoleUI(calculator);
+            }
+        }
+        logger.debug("gui mode");
+        return new GraphicalUI(calculator);
     }
 }

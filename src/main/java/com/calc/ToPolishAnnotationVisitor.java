@@ -13,10 +13,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Transforms expression from split lexemes to polish notation.
+ */
 class ToPolishAnnotationVisitor implements TokenVisitor {
-    private LinkedList<Token> res;
+    private final LinkedList<Token> res;
+    private final StackHolder stackHolder;
     private State previous;
-    private StackHolder stackHolder;
 
     public ToPolishAnnotationVisitor() {
         stackHolder = new StackHolder();
@@ -82,9 +85,9 @@ class ToPolishAnnotationVisitor implements TokenVisitor {
 
     private static class StackHolder {
         //List of executable, just like in stack, but with indexed positions
-        private LinkedList<ExecutableToken> executable;
+        private final LinkedList<ExecutableToken> executable;
         //Map of opening parentheses in format <after operator's position, number of parentheses>
-        private Map<Integer, Integer> parenthesis;
+        private final Map<Integer, Integer> parenthesis;
 
         StackHolder() {
             executable = new LinkedList<ExecutableToken>();

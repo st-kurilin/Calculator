@@ -11,8 +11,11 @@ import com.calc.token.service.SeparatorToken;
 
 import java.util.Stack;
 
+/**
+ * Evaluates expression in polish notation.
+ */
 class CalcPolishAnnotationVisitor implements TokenVisitor {
-    private Stack<Token> stack;
+    private final Stack<Token> stack;
 
     public CalcPolishAnnotationVisitor() {
         stack = new Stack<Token>();
@@ -59,12 +62,11 @@ class CalcPolishAnnotationVisitor implements TokenVisitor {
         visitExecutable(functionToken);
     }
 
-
     public Number getResult() {
         if (stack.isEmpty()) {
             return 0;
         }
-        Token res = stack.pop();
+        final Token res = stack.pop();
         if (!stack.isEmpty()) {
             throw new RuntimeException("Illegal lexeme in stack: " + stack.pop());
         }
