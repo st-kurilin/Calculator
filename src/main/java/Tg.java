@@ -1,4 +1,4 @@
-import com.calc.token.function.FunctionToken;
+import com.github.stkurilin.calculator.core.token.function.FunctionToken;
 
 public class Tg extends FunctionToken.SingleArgumentFunction {
     @Override

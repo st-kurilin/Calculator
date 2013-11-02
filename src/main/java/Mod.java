@@ -1,4 +1,4 @@
-import com.calc.token.operator.binary.BinaryToken;
+import com.github.stkurilin.calculator.core.token.operator.binary.BinaryToken;
 
 public class Mod extends BinaryToken {
     public Mod() {
