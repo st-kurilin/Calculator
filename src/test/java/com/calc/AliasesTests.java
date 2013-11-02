@@ -1,6 +1,5 @@
-package com.tests;
+package com.calc;
 
-import com.calc.Calculator;
 import org.junit.Before;
 import org.junit.Test;
 

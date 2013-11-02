@@ -1,4 +1,4 @@
-package com.tests;
+package com.calc;
 
 import com.calc.exception.CalculatorException;
 import com.calc.tokenfactory.RuntimeLoadTokenFactory;

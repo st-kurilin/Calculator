@@ -1,6 +1,5 @@
-package com.tests;
+package com.calc;
 
-import com.calc.Calculator;
 import com.calc.exception.CalculatorException;
 import org.junit.Assert;
 import org.junit.BeforeClass;

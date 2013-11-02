@@ -35,7 +35,7 @@ public class Calculator {
         try {
             return calcFromPolishAnnotation(toPolishAnnotation(analyzer.getIterable(inp)));
         } catch (CalculatorRuntimeException e) {
-            RuntimeException ee =  new RuntimeException("error>" + inp);
+            CalculatorException ee =  new CalculatorException(e);
             ee.initCause(e);
             throw ee;
         }
