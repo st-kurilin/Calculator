@@ -10,7 +10,7 @@ import com.github.stkurilin.calculator.core.token.service.SeparatorToken;
 import java.util.LinkedList;
 import java.util.Stack;
 
-class ValidatorVisitor implements TokenVisitor {
+class ValidatorVisitor implements TokenVisitor<Void> {
     private State previous;
     private Stack<Integer> positionsOfNotClosedParentheses;
     private int cursor;
@@ -64,7 +64,7 @@ class ValidatorVisitor implements TokenVisitor {
         throw new CalculatorRuntimeException("Unrecognized lexeme", cursor);
     }
 
-    public void throwErrorsIfTheyArePresented() {
+    public Void complete() {
         if (!positionsOfNotClosedParentheses.isEmpty()) {
             throw new CalculatorRuntimeException("Illegal opening parenthesis", positionsOfNotClosedParentheses.pop());
         }
@@ -74,6 +74,7 @@ class ValidatorVisitor implements TokenVisitor {
                         p.getPosition());
             }
         }
+        return null;
     }
 
     /*

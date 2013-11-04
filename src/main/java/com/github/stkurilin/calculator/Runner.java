@@ -8,7 +8,9 @@ import com.github.stkurilin.calculator.ui.HelpUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Runs program.
+ */
 public class Runner {
     private static Logger logger = LoggerFactory.getLogger(Runner.class);
 

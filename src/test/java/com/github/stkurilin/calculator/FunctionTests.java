@@ -73,5 +73,4 @@ public class FunctionTests extends CalculationTests {
             assertEquals("Check message", "These function can have only one argument", e.getMessage());
         }
     }
-
 }

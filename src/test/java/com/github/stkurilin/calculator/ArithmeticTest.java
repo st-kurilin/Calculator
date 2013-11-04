@@ -151,7 +151,6 @@ public class ArithmeticTest extends CalculationTests {
 
     @Test
     public void checkDecrementAndIncrement() {
-        int i = 0;
         assertCalculation("Check calculation with increment and decrement", 2, "++(+(--2))");
     }
 
@@ -164,6 +163,4 @@ public class ArithmeticTest extends CalculationTests {
     public void checkDecrementAndIncrementInExpression() {
         assertCalculation("Check calculation with increment and decrement", 5, "++6 / 2 + 3 + (--3)  / 4 - (--2) * 2 ");
     }
-
-
 }

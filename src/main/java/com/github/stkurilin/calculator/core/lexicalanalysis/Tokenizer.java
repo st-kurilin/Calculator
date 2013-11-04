@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 /**
  * Splits strings to tokens.
+ * <p/>
+ * Implemented in lazy way. String processed on demand.
  */
 public class Tokenizer {
     private TokenFactory factory;
@@ -37,7 +39,7 @@ public class Tokenizer {
         private void evalNextToken() {
             skipWhiteSpaces();
             if (thereIsUnparsedText()) {
-                Token token = factory.createToken(source, position);
+                final Token token = factory.createToken(source, position);
                 validateToken(token);
                 nextToken = token;
             } else {
@@ -89,7 +91,7 @@ public class Tokenizer {
                     if (thereIsUnparsedText()) {
                         validator.unrecognizedLexeme();
                     }
-                    validator.throwErrorsIfTheyArePresented();
+                    validator.complete();
                 }
 
                 public void remove() {

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import static org.junit.Assert.fail;
 
 
-public class CalculationTests {
+public abstract class CalculationTests {
     protected static Calculator calculator;
     private Logger logger = LoggerFactory.getLogger(CalculationTests.class);
 
@@ -38,6 +38,4 @@ public class CalculationTests {
     protected void assertCalculation(String comment, int expected, String expr) {
         Assert.assertEquals(comment, expected, calc(expr), 0.01);
     }
-
-
 }

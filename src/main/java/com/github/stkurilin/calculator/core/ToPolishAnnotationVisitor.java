@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Transforms expression from split lexemes to polish notation.
  */
-class ToPolishAnnotationVisitor implements TokenVisitor {
+class ToPolishAnnotationVisitor implements TokenVisitor<List<Token>> {
     private final LinkedList<Token> res;
     private final StackHolder stackHolder;
     private State previous;
@@ -69,7 +69,7 @@ class ToPolishAnnotationVisitor implements TokenVisitor {
         previous = State.CLOSE_PARENTHESIS;
     }
 
-    public List<Token> inPolishAnnotation() {
+    public List<Token> complete() {
         while (stackHolder.executableOnTop()) {
             res.addLast(stackHolder.popOperator());
         }
@@ -95,14 +95,14 @@ class ToPolishAnnotationVisitor implements TokenVisitor {
         }
 
         public void pushLeftParenthesis() {
-            int pos = executable.size();
-            Integer number = getCurrentParenthesis() + 1;
+            final int pos = executable.size();
+            final Integer number = getCurrentParenthesis() + 1;
             parenthesis.put(pos, number);
         }
 
         public void popLeftParenthesis() {
-            int index = executable.size();
-            int val = parenthesis.get(index) - 1;
+            final int index = executable.size();
+            final int val = parenthesis.get(index) - 1;
             if (val != 0) {
                 parenthesis.put(index, val);
             } else {
@@ -160,7 +160,7 @@ class ToPolishAnnotationVisitor implements TokenVisitor {
         }
 
         protected int getCurrentParenthesis() {
-            Integer number = parenthesis.get(executable.size());
+            final Integer number = parenthesis.get(executable.size());
             if (number == null) {
                 return 0;
             }

@@ -14,7 +14,7 @@ import java.util.Stack;
 /**
  * Evaluates expression in polish notation.
  */
-class CalcPolishAnnotationVisitor implements TokenVisitor {
+class CalcPolishAnnotationVisitor implements TokenVisitor<Number> {
     private final Stack<Token> stack;
 
     public CalcPolishAnnotationVisitor() {
@@ -62,7 +62,7 @@ class CalcPolishAnnotationVisitor implements TokenVisitor {
         visitExecutable(functionToken);
     }
 
-    public Number getResult() {
+    public Number complete() {
         if (stack.isEmpty()) {
             return 0;
         }
